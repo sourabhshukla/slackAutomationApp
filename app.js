@@ -99,15 +99,14 @@ app.action("createSummary", async ({ ack, body, say }) => {
     console.log("Already present");
     return;
   }
-  return;
 
+  await displayModal(app, body, "Success", "Summary Creation Successfull");
   let summarizedText = text;
   if (text.split(" ").length > process.env.max_words) {
     summarizedText = await askGpt(text);
   }
   addNotionPageToDatabase(process.env.DATABASE_ID, messageTs, summarizedText);
   console.log("Done");
-  await displayModal(app, body, "Success", "Summary Creation Successfull");
 });
 
 // Handle the installation process (OAuth)
